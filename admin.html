@@ -1,0 +1,158 @@
+<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0a7f63"><title>PillDrop Admin</title>
+<link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f8f7;--card:#fff;--fg:#0f1a17;--muted:#66756f;--line:#e4eae7;--acc:#097a60;--acc2:#2bd1a6;--accfg:#fff;--soft:#e7f5f0;--bad:#d7263d;--badbg:#fdeceb;--ok:#0b7a58;--okbg:#e7f5f0;--shadow:0 1px 2px rgba(15,26,23,.04),0 12px 32px -8px rgba(9,122,96,.18);--blob:.5;--wrbg:#fff4e5;--wrfg:#9a3412;color-scheme:light}:root[data-theme=light]{color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0b1310;--card:#131d19;--fg:#e6f2ed;--muted:#8fa79d;--line:#22342d;--acc:#2fd0a0;--acc2:#0a8c6c;--accfg:#04201a;--soft:#17302a;--bad:#ff8a80;--badbg:#2b1715;--ok:#3ddba7;--okbg:#10291f;--shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -10px rgba(0,0,0,.6);--blob:.28;--wrbg:#2a1d10;--wrfg:#fdba74;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0b1310;--card:#131d19;--fg:#e6f2ed;--muted:#8fa79d;--line:#22342d;--acc:#2fd0a0;--acc2:#0a8c6c;--accfg:#04201a;--soft:#17302a;--bad:#ff8a80;--badbg:#2b1715;--ok:#3ddba7;--okbg:#10291f;--shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -10px rgba(0,0,0,.6);--blob:.28;--wrbg:#2a1d10;--wrfg:#fdba74;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--fg);font:16px/1.55 Inter,"Hind Siliguri",system-ui,-apple-system,"Noto Sans Bengali",sans-serif;padding:max(16px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom));position:relative;overflow-x:hidden;display:flex;flex-direction:column}
+body::before,body::after{content:"";position:fixed;z-index:0;border-radius:50%;filter:blur(70px);opacity:var(--blob);pointer-events:none}
+body::before{width:340px;height:340px;background:#2bd1a6;top:-120px;right:-100px}
+body::after{width:300px;height:300px;background:#0a7f63;bottom:-120px;left:-100px}
+main{position:relative;z-index:1;max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:16px;justify-content:center;flex:1;width:100%;padding:16px 0}
+.brand{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;animation:rise .6s ease both}
+.logo{display:flex;align-items:center;justify-content:center;gap:12px;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.logo i{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#0a7f63,#2bd1a6);display:grid;place-items:center;position:relative;flex:none;box-shadow:0 10px 24px -8px rgba(10,127,99,.6)}
+.logo i::after{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--acc);opacity:0;animation:ring 3s ease-out infinite}
+.logo span{color:var(--acc)}
+.tg{margin:0;font-size:14px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 12px;border-radius:99px;background:var(--soft);color:var(--acc);font-size:12px;font-weight:600;letter-spacing:.04em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 20px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow);animation:rise .6s .08s ease both}
+.card h2{text-align:center;margin:0;font-size:20px;line-height:1.3}.card .sub{margin:-10px 0 2px;font-size:14px;color:var(--muted)}
+label{display:flex;flex-direction:column;gap:7px;font-size:14px;font-weight:500;color:var(--muted)}
+.ipt{position:relative;display:flex;align-items:center}
+.ipt>svg{position:absolute;left:13px;width:18px;height:18px;color:var(--muted);pointer-events:none;transition:color .15s}
+.ipt:focus-within>svg{color:var(--acc)}
+input{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;transition:border-color .15s,box-shadow .15s}
+.ipt input{padding-left:42px}.ipt.has-eye input{padding-right:46px}
+input::placeholder{color:var(--muted);opacity:.7}
+input:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 18%,transparent)}
+input:disabled{opacity:.55}
+#code{letter-spacing:.35em;font-weight:600;font-variant-numeric:tabular-nums}#code::placeholder{letter-spacing:.35em}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;padding:0;flex:none;background:transparent;color:var(--muted);border-radius:9px;display:grid;place-items:center}
+.eye svg{width:18px;height:18px}.eye .off{display:none}.eye.on .off{display:block}.eye.on .onn{display:none}
+.eye:hover{background:var(--soft);color:var(--acc)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;font-weight:600;border:0;border-radius:12px;padding:12px 16px;background:linear-gradient(135deg,#0a7f63,#17b58c);color:#fff;cursor:pointer;flex:1 1 120px;transition:transform .12s,box-shadow .15s,filter .15s;box-shadow:0 8px 20px -8px rgba(10,127,99,.7)}
+button:hover{filter:brightness(1.06)}button:active{transform:scale(.98)}
+button:focus-visible{outline:3px solid color-mix(in srgb,var(--acc) 40%,transparent);outline-offset:2px}
+button.alt{background:transparent;color:var(--fg);border:1px solid var(--line);box-shadow:none}button.alt:hover{background:var(--soft);filter:none}
+button.danger{background:transparent;color:var(--bad);border:1px solid color-mix(in srgb,var(--bad) 55%,transparent);box-shadow:none}button.danger:hover{background:var(--badbg);filter:none}
+.card>button{flex:none}#enter{width:100%;padding:14px;font-size:16px}
+#msg{font-size:14px;overflow-wrap:anywhere;border-radius:12px;padding:11px 14px;background:var(--soft);color:var(--muted);animation:rise .25s ease both}
+#msg:empty{display:none}#msg.ok{background:var(--okbg);color:var(--ok)}#msg.err{background:var(--badbg);color:var(--bad)}
+small{color:var(--muted);font-weight:400}
+.foot{text-align:center;font-size:12px;color:var(--muted);margin:4px 0 0;display:flex;flex-direction:column;gap:2px}
+.sec{display:flex;align-items:center;justify-content:center;gap:6px}.sec svg{width:13px;height:13px}
+.bar{position:relative;z-index:1;max-width:440px;width:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bar .r{display:flex;gap:8px}
+.pill{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:inherit;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:none;transition:background .15s,border-color .15s}
+.pill:hover{background:var(--soft);border-color:var(--acc);filter:none}
+.pill.home{color:var(--acc)}
+.pill.ic{width:38px;padding:0;font-size:16px}
+.anim{display:flex;justify-content:center;margin:-6px 0 -8px}
+.rpl{transform-box:fill-box;transform-origin:center;opacity:0;animation:rip 4s ease-out infinite}.rpl.r2{animation-delay:.25s}.rpl.r3{animation-delay:.5s}
+@keyframes rip{0%,44%{transform:scale(.3);opacity:0}47%{opacity:.85}100%{transform:scale(1.8);opacity:0}}
+.lgo{transform-box:fill-box;transform-origin:center;animation:dropin 4s cubic-bezier(.3,0,.3,1) infinite}
+@keyframes dropin{0%{transform:translateY(-70px) scale(.85);opacity:0}22%{opacity:1}44%{transform:translateY(0) scale(1.06)}52%{transform:translateY(0) scale(.96)}62%,100%{transform:translateY(0) scale(1);opacity:1}}
+.cap{transform-box:fill-box;transform-origin:center;animation:bob 3.5s ease-in-out infinite}@keyframes bob{0%,100%{transform:translateY(0) rotate(-14deg)}50%{transform:translateY(-10px) rotate(-6deg)}}
+.sp{animation:tw 2.2s ease-in-out infinite}.s2{animation-delay:.7s}.s3{animation-delay:1.3s}@keyframes tw{0%,100%{opacity:.15}50%{opacity:1}}
+#pdsp{position:fixed;inset:0;z-index:99999;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;transition:opacity .6s ease}
+#pdsp.off{opacity:0;pointer-events:none}
+#pdsp .lg{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#0a7f63,#2bd1a6);display:grid;place-items:center}
+#pdsp .lg svg{width:52%;height:52%}
+#pdsp .nm{font-size:28px;font-weight:700;margin-top:16px}
+#pdsp .sl{font-size:15px;opacity:.7;margin-top:6px;line-height:1.5}
+#pdsp .wr{max-width:320px;margin-top:26px;background:var(--wrbg);color:var(--wrfg);border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.5}
+.lh{display:flex;align-items:center;justify-content:center;gap:8px}.lh .sh{display:grid;place-items:center;color:var(--acc)}
+@keyframes ring{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(1.5);opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div id="pdsp" aria-hidden="true"><div class="lg"><svg viewBox="0 0 96 96"><path d="M48 14C53 28 72 44 72 60a24 24 0 0 1-48 0C24 44 43 28 48 14Z" fill="#fff"/><path d="M48 50v20M38 60h20" stroke="#0a8c6c" stroke-width="7" stroke-linecap="round"/></svg></div><div class="nm">PillDrop</div><div class="sl" data-i="tg"></div><div class="wr" data-i="wr"></div></div>
+<div class="bar"><a class="pill home" href="./" id="home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg><span data-i="home"></span></a><div class="r"><button type="button" class="pill ic" id="thb" aria-label="Theme">🌓</button><button type="button" class="pill" id="lgb" aria-label="Language">English</button></div></div>
+<main>
+<div class="brand">
+ <div class="anim"><svg viewBox="0 0 240 200" width="190" height="158" aria-hidden="true"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a7f63"/><stop offset="1" stop-color="#2bd1a6"/></linearGradient></defs>
+<ellipse class="rpl r1" cx="120" cy="170" rx="62" ry="14" fill="none" stroke="#2bd1a6" stroke-width="2.5"/><ellipse class="rpl r2" cx="120" cy="170" rx="62" ry="14" fill="none" stroke="#2bd1a6" stroke-width="2"/><ellipse class="rpl r3" cx="120" cy="170" rx="62" ry="14" fill="none" stroke="#2bd1a6" stroke-width="1.5"/>
+<g class="lgo"><rect x="78" y="58" width="84" height="84" rx="26" fill="url(#gg)"/><path d="M120 74S99 99 99 113a21 21 0 0 0 42 0C141 99 120 74 120 74z" fill="#fff"/><path d="M120 105v19M110.500 114.500h19" stroke="#0a8c6c" stroke-width="5" stroke-linecap="round" fill="none"/></g>
+<g class="cap"><rect x="20" y="96" width="50" height="20" rx="10" fill="#fff" stroke="#0a7f63" stroke-width="2.500"/><path d="M45 96h15a10 10 0 0 1 0 20H45z" fill="#2bd1a6"/></g>
+<circle class="sp s1" cx="190" cy="62" r="4" fill="#2bd1a6"/><circle class="sp s2" cx="204" cy="112" r="3" fill="#0a7f63"/><circle class="sp s3" cx="52" cy="56" r="3" fill="#0a7f63"/></svg></div>
+<div class="logo"><b>Pill<span>Drop</span></b></div>
+ <p class="tg" data-i="tg"></p>
+</div>
+<div class="card" id="login">
+ <div><h2 class="lh"><span class="sh"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span data-i="lt"></span></h2></div>
+  <label><span data-i="pw"></span><span class="ipt has-eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><input id="pw" type="password" autocomplete="current-password" placeholder="••••••••"><button type="button" class="eye alt" data-for="pw" aria-label="দেখান"><svg class="onn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.5 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7c1.7 0 3.2-.4 4.5-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+ <label><span data-i="cd"></span><span class="ipt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18h3"/></svg><input id="code" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></span></label>
+ <button id="enter" data-i="enter"></button>
+</div>
+<div class="card" id="panel" hidden>
+ <div><h2 data-i="pt"></h2></div>
+  <label>API Base URL<input id="base" inputmode="url" placeholder="https://freemodel.in/v1"></label>
+ <label>Model<input id="model" placeholder="claude-opus-5-5"></label>
+ <label><span>API Key <small id="keyhint"></small></span><span class="ipt has-eye"><input id="key" type="password" autocomplete="off" data-ph="kph" style="padding-left:14px"><button type="button" class="eye alt" data-for="key" aria-label="দেখান"><svg class="onn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.5 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7c1.7 0 3.2-.4 4.5-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></span></label>
+ <div class="row"><button id="save" data-i="save"></button><button id="test" class="alt" data-i="test"></button></div>
+ <button id="reset" class="danger" data-i="reset"></button>
+ <button id="logout" class="alt" data-i="logout"></button>
+</div>
+<div id="msg" role="status" aria-live="polite"></div>
+<p class="foot"><span data-i="f2"></span></p>
+</main>
+<script>var API="https://pilldrop-api.bbbijoybb.workers.dev",tok="";
+var $=function(i){return document.getElementById(i)};
+var D={home:["সাইটে যান","Visit site"],lt:["অ্যাডমিন লগইন","Admin login"],pt:["এআই সেটিংস","AI settings"],pw:["অ্যাডমিন পাসওয়ার্ড","Admin password"],cd:["Authenticator কোড (৬ অঙ্ক)","Authenticator code (6 digits)"],enter:["প্রবেশ করুন","Sign in"],kph:["নতুন key দিন (ফাঁকা রাখলে আগেরটাই থাকবে)","Enter a new key (leave blank to keep the current one)"],save:["সেভ করুন","Save"],test:["টেস্ট করুন","Test"],reset:["ডিফল্টে ফিরুন","Reset to default"],logout:["লগআউট","Log out"],f2:["© PillDrop · শুধুমাত্র অনুমোদিত অ্যাডমিনের জন্য","© PillDrop · Authorized admins only"],tg:["লক্ষণ লিখুন, সমাধান পান এক ঝলকে","Type your symptoms, get answers in a flash"],wr:["PillDrop ডাক্তার নয়। এটি প্রেসক্রিপশন নয় এবং চিকিৎসকের পরামর্শের বিকল্প নয়।","PillDrop is not a doctor. This is not a prescription and not a substitute for a doctor's advice."],sure:["নিশ্চিত? আবার চাপুন","Sure? Tap again"],show:["দেখান","Show"],hide:["লুকান","Hide"]};
+var LANG="bn",TH="",hint=null;
+try{var sl=localStorage.getItem("pd_lang");if(sl==="en"||sl==="bn")LANG=sl;TH=localStorage.getItem("pd_theme")||""}catch(e){}
+function T(k){return D[k][LANG==="bn"?0:1]}
+function L(b,e){return LANG==="bn"?b:e}
+function applyTheme(){var r=document.documentElement;if(TH)r.setAttribute("data-theme",TH);else r.removeAttribute("data-theme");$("thb").textContent=TH==="dark"?"🌙":TH==="light"?"☀️":"🌓"}
+function paintHint(){$("keyhint").textContent=hint===null?"":hint.has?L("(বর্তমান: ","(current: ")+hint.key+")":L("(কোনো key নেই)","(no key set)")}
+function applyLang(){document.documentElement.lang=LANG;document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=T(e.dataset.i)});
+ document.querySelectorAll("[data-ph]").forEach(function(e){e.placeholder=T(e.dataset.ph)});
+ document.querySelectorAll(".eye").forEach(function(b){b.setAttribute("aria-label",T(b.classList.contains("on")?"hide":"show"))});
+ $("lgb").textContent=LANG==="bn"?"English":"বাংলা";$("reset").textContent=T("reset");$("reset").dataset.sure="";paintHint();$("msg").textContent=""}
+$("lgb").onclick=function(){LANG=LANG==="bn"?"en":"bn";try{localStorage.setItem("pd_lang",LANG)}catch(e){}applyLang()};
+$("thb").onclick=function(){TH=TH===""?"dark":TH==="dark"?"light":"";try{localStorage.setItem("pd_theme",TH)}catch(e){}applyTheme()};
+function say(t,c){var m=$("msg");m.textContent=t;m.className=c||""}
+async function raw(path,method,body,auth){
+ var h={"Content-Type":"application/json"};if(auth)h.Authorization="Bearer "+auth;
+ var r=await fetch(API+path,{method:method,headers:h,body:body?JSON.stringify(body):undefined});
+ var d={};try{d=await r.json()}catch(e){}return{s:r.status,d:d}}
+function toLogin(m){tok="";$("panel").hidden=true;$("login").hidden=false;$("pw").value="";$("code").value="";if(m)say(m,"err")}
+async function call(path,method,body){
+ var r=await raw(path,method,body,tok);
+ if(r.s===401){toLogin(L("সেশন শেষ। আবার লগইন করুন।","Session expired. Please log in again."))}return r}
+function fill(d){$("base").value=d.base||"";$("model").value=d.model||"";$("key").value="";
+ $("key").disabled=d.key_editable===false;
+ hint={has:!!d.has_key,key:d.key};paintHint()}
+async function load(){var r=await call("/admin/config","GET");if(r.d.ok){fill(r.d);$("login").hidden=true;$("panel").hidden=false}}
+$("enter").onclick=async function(){
+ var pw=$("pw").value,code=$("code").value.replace(/\s/g,"");
+ if(!pw||code.length!==6){say(L("পাসওয়ার্ড ও ৬ অঙ্কের কোড দিন।","Enter the password and the 6-digit code."),"err");return}
+ say(L("যাচাই হচ্ছে…","Verifying…"));
+ try{var r=await raw("/admin/login","POST",{password:pw,code:code});
+  if(r.s===401){say(L("পাসওয়ার্ড বা কোড ভুল। (একই কোড দুইবার চলে না, নতুন কোডের জন্য ৩০ সেকেন্ড অপেক্ষা করুন।)","Wrong password or code. (A code can't be used twice; wait 30 seconds for a new one.)"),"err");return}
+  if(r.s===429){say(L("অনেকবার ভুল হয়েছে। ১৫ মিনিট পরে চেষ্টা করুন।","Too many failed attempts. Try again in 15 minutes."),"err");return}
+  if(!r.d.ok){say(L("সার্ভার সেট করা নেই (","Server is not set up (")+(r.d.error||r.s)+L("). Worker-এ ADMIN_KEY, ADMIN_TOTP ও CONFIG KV যোগ করুন।","). Add ADMIN_KEY, ADMIN_TOTP and CONFIG KV to the Worker."),"err");return}
+  tok=r.d.token;$("pw").value="";$("code").value="";say(L("লগইন হয়েছে। সেশন "+r.d.minutes+" মিনিট চলবে।","Logged in. The session lasts "+r.d.minutes+" minutes."),"ok");await load()}
+ catch(e){say(L("সার্ভারে পৌঁছানো যায়নি।","Could not reach the server."),"err")}};
+$("code").onkeydown=$("pw").onkeydown=function(e){if(e.key==="Enter")$("enter").click()};
+$("save").onclick=async function(){
+ var r=await call("/admin/config","POST",{base:$("base").value,model:$("model").value,key:$("key").value});
+ if(r.d.ok){say(L("সেভ হয়েছে।","Saved."),"ok");load()}else if(r.s!==401)say(r.d.error==="base_not_allowed"?L("এই সার্ভার অনুমোদিত নয়। Cloudflare-এ worker.js-এর ALLOWED_BASES তালিকায় যোগ করুন।","This server is not allowed. Add it to ALLOWED_BASES in worker.js on Cloudflare."):r.d.error==="key_required_when_base_changes"?L("সার্ভার বদলাতে নতুন API Key-ও দিতে হবে।","To change the server you must also enter a new API Key."):L("সেভ হয়নি: ","Not saved: ")+(r.d.error||r.s),"err")};
+$("test").onclick=async function(){say(L("টেস্ট চলছে…","Testing…"));
+ var r=await call("/admin/test","POST");
+ if(r.d.ok)say(L("AI সংযোগ ঠিক আছে (status ","AI connection is fine (status ")+r.d.status+").","ok");else if(r.s!==401)say(L("সমস্যা: ","Problem: ")+(r.d.error||("status "+r.d.status+" "+(r.d.sample||""))),"err")};
+$("reset").onclick=async function(){
+ if($("reset").dataset.sure!=="1"){$("reset").dataset.sure="1";$("reset").textContent=T("sure");setTimeout(function(){$("reset").dataset.sure="";$("reset").textContent=T("reset")},4000);return}
+ $("reset").dataset.sure="";$("reset").textContent=T("reset");
+ var r=await call("/admin/config","POST",{reset:true});
+ if(r.d.ok){say(L("ডিফল্টে ফিরেছে।","Reset to default."),"ok");load()}else if(r.s!==401)say(L("ব্যর্থ: ","Failed: ")+(r.d.error||r.s),"err")};
+document.querySelectorAll(".eye").forEach(function(b){b.onclick=function(){var i=$(b.dataset.for),sh=i.type==="password";i.type=sh?"text":"password";b.classList.toggle("on",sh);b.setAttribute("aria-label",T(sh?"hide":"show"))}});
+$("logout").onclick=function(){toLogin(L("লগআউট হয়েছে।","Logged out."))};
+applyTheme();applyLang();
+(function(){var e=$("pdsp");function h(){e.classList.add("off");setTimeout(function(){if(e.parentNode)e.parentNode.removeChild(e)},800)}setTimeout(h,1800);e.addEventListener("click",h)})();
+</script></body></html>
